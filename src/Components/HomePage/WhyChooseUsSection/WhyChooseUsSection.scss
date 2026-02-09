@@ -1,0 +1,382 @@
+.why-choose-us-section {
+  background: transparent;
+  padding-top: 80px;
+  padding-bottom: 80px;
+
+  .why-choose-us-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+
+    .why-choose-us-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-image-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .hero-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: 20px;
+      }
+    }
+
+    .features-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .section-title {
+        font-size: 42px;
+        font-weight: 700;
+        line-height: 1.3;
+        color: #333;
+        margin: 0;
+        text-align: left;
+      }
+
+      .features-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        text-align: left;
+
+        .feature-icon-wrapper {
+          width: 45px;
+          height: 45px;
+          background: #BA00FF;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+
+          .feature-icon {
+            width: 25px;
+            height: 25px;
+            object-fit: contain;
+            margin-top: 2px;
+          }
+        }
+
+        .feature-content {
+          flex: 1;
+
+          .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            // line-height: 1.3;
+          }
+
+          .feature-description {
+            font-size: 14px;
+            line-height: 1.1;
+            color: black;
+            margin: 0;
+          }
+        }
+      }
+
+      .whatsapp-booking-wrapper {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: -20px;
+
+        .btn {
+          min-width: 280px;
+          font-weight: 500;
+          padding: 14px 28px;
+          font-size: 20px;
+
+          .btn-icon {
+            width: 35px;
+            height: 35px;
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .why-choose-us-section {
+    .why-choose-us-wrapper {
+      .why-choose-us-content {
+        gap: 40px;
+      }
+
+      .features-container {
+        .section-title {
+          font-size: 36px;
+        }
+
+        .feature-item {
+          .feature-icon-wrapper {
+            width: 55px;
+            height: 55px;
+
+            .feature-icon {
+              width: 28px;
+              height: 28px;
+            }
+          }
+
+          .feature-content {
+            .feature-title {
+              font-size: 18px;
+            }
+
+            .feature-description {
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 968px) {
+  .why-choose-us-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+
+    .why-choose-us-wrapper {
+      .why-choose-us-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .features-container {
+        .section-title {
+          font-size: 32px;
+          text-align: center;
+        }
+
+        .features-list {
+          grid-template-columns: 1fr;
+          gap: 25px;
+        }
+
+        .feature-item {
+          .feature-icon-wrapper {
+            width: 50px;
+            height: 50px;
+
+            .feature-icon {
+              width: 25px;
+              height: 25px;
+            }
+          }
+        }
+
+        .whatsapp-booking-wrapper {
+          justify-content: center;
+
+          .btn {
+            min-width: 250px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .why-choose-us-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    .why-choose-us-wrapper {
+      .features-container {
+        .section-title {
+          font-size: 28px;
+        }
+
+        .features-list {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        // .feature-item {
+        //   gap: 15px;
+
+        //   .feature-icon-wrapper {
+        //     width: 45px;
+        //     height: 45px;
+
+        //     .feature-icon {
+        //       width: 22px;
+        //       height: 22px;
+        //     }
+        //   }
+
+        //   .feature-content {
+        //     .feature-title {
+        //       font-size: 18px;
+        //     }
+
+        //     .feature-description {
+        //       font-size: 14px;
+        //     }
+        //   }
+        // }
+
+        .whatsapp-booking-wrapper {
+          justify-content: center;
+          margin-top: 25px;
+
+          .btn {
+            min-width: 100%;
+            width: 100%;
+            padding: 12px 24px;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .why-choose-us-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+    .why-choose-us-wrapper {
+      .features-container {
+        .section-title {
+          font-size: 28px;
+          font-weight: 600;
+          text-align: left;
+        }
+
+        .feature-description {
+          font-size: 14px;
+          text-align: left;
+        }
+
+        .features-list {
+          gap: 10px;
+        }
+
+        .feature-item {
+          gap: 30px;
+
+          // .feature-icon-wrapper {
+          //   width: 40px;
+          //   height: 40px;
+
+          //   .feature-icon {
+          //     width: 20px;
+          //     height: 20px;
+          //   }
+          // }
+
+          .feature-content {
+            gap: 0px;
+
+            .feature-title {
+              font-size: 22px;
+            }
+
+            .feature-description {
+              font-size: 16px;
+            }
+          }
+        }
+
+        .whatsapp-booking-wrapper {
+          justify-content: center;
+          margin-top: 0px;
+
+          .btn {
+            min-width: 100%;
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 22px;
+
+            .btn-icon {
+              font-size: 30px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .why-choose-us-section {
+
+    .why-choose-us-wrapper {
+      .features-container {
+        .features-list {
+          gap: 10px;
+        }
+
+        .feature-item {
+          gap: 20px;
+
+          // .feature-icon-wrapper {
+          //   width: 40px;
+          //   height: 40px;
+
+          //   .feature-icon {
+          //     width: 20px;
+          //     height: 20px;
+          //   }
+          // }
+
+          .feature-content {
+            gap: 0px;
+
+            .feature-title {
+              font-size: 18px;
+              line-height: 1.2;
+            }
+
+            .feature-description {
+              font-size: 16px;
+            }
+          }
+        }
+
+        .whatsapp-booking-wrapper {
+          justify-content: center;
+          margin-top: 0px;
+
+          .btn {
+            min-width: 100%;
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 18px;
+
+            .btn-icon {
+              font-size: 25px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

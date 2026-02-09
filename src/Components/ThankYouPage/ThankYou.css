@@ -1,0 +1,169 @@
+/* ThankYou page - same layout as HomeHero: background image, content left-bottom on desktop, bottom on mobile */
+.thankyou-hero {
+  margin-top: 70px;
+  position: relative;
+  width: 100%;
+  min-height: calc(90vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.thankyou-hero .thankyou-banner-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.thankyou-hero .thankyou-banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.thankyou-hero .thankyou-banner-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.thankyou-hero .thankyou-hero-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 20px;
+  text-align: left;
+  padding: 0 100px 80px 100px;
+  max-width: 600px;
+}
+
+.thankyou-hero .thankyou-content-title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #0D4E62;
+  margin: 0;
+  text-align: left;
+}
+
+.thankyou-hero .thankyou-content-description {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #0D4E62;
+  margin: 0;
+  text-align: left;
+}
+
+.thankyou-hero .thankyou-content-button {
+  margin-top: 10px;
+}
+
+.thankyou-hero .thankyou-hero-content a {
+  text-decoration: none;
+}
+
+/* Tablet - same as desktop, slightly less padding */
+@media (max-width: 1200px) {
+  .thankyou-hero .thankyou-banner-background::after {
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+
+  .thankyou-hero .thankyou-hero-content {
+    padding: 0 60px 60px 60px;
+    max-width: 500px;
+  }
+
+  .thankyou-hero .thankyou-content-title,
+  .thankyou-hero .thankyou-content-description {
+    color: white;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Mobile - content at bottom, centered */
+@media (max-width: 768px) {
+  .thankyou-hero {
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 500px;
+    height: 500px;
+  }
+
+  .thankyou-hero .thankyou-banner-background::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 50%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+  }
+
+  .thankyou-hero .thankyou-hero-content {
+    padding: 0 30px 60px 30px;
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .thankyou-hero .thankyou-content-title {
+    font-size: 32px;
+    text-align: center;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .thankyou-hero .thankyou-content-description {
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .thankyou-hero .thankyou-hero-content a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .thankyou-hero {
+    min-height: 450px;
+    height: 450px;
+  }
+
+  .thankyou-hero .thankyou-hero-content {
+    padding: 0 20px 30px 20px;
+  }
+
+  .thankyou-hero .thankyou-content-title {
+    font-size: 28px;
+  }
+
+  .thankyou-hero .thankyou-content-description {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,266 @@
+@import '../../../index.scss';
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 1003;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 5px 100px;
+    height: auto;
+    height: 80px;
+    transition: all 0.5s ease;
+    background: white;
+    // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: -15px;
+        left: 0;
+        right: 0;
+        height: 15px;
+        background: transparent;
+        transition: background 0.5s ease;
+    }
+
+    .logo-div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        z-index: 10001;
+
+        .logo {
+            width: 170px;
+            height: auto;
+            max-height: 70px;
+            object-fit: contain;
+        }
+
+        .logo-link {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .call-div-right {
+        display: flex;
+        align-items: center;
+        z-index: 10001;
+        height: 50px;
+        width: auto;
+        border-radius: 34px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        width: 180px;
+
+        .whatsapp-button {
+            width: 100%;
+            height: 50px;
+            background: $primary;
+            color: $black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 0 16px;
+            border-radius: 34px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.3s ease;
+
+            // &:hover {
+            //     background: $secondary;
+            // }
+
+            .whatsapp-icon-btn {
+                width: 35px;
+                height: 35px;
+                object-fit: contain;
+                flex-shrink: 0;
+            }
+
+            .whatsapp-number {
+                font-size: 18px;
+                color: white;
+                font-weight: 500;
+                line-height: 1;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            width: 160px;
+            height: 45px;
+            border-radius: 28px;
+
+            .whatsapp-button {
+                height: 45px;
+                border-radius: 28px;
+                padding: 0 12px;
+                gap: 4px;
+
+                .whatsapp-icon-btn {
+                    width: 18px;
+                    height: 18px;
+                }
+
+                .whatsapp-number {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            width: 100px;
+            height: 40px;
+            border-radius: 25px;
+
+            .whatsapp-button {
+                height: 40px;
+                border-radius: 25px;
+                padding: 0 10px;
+                gap: 3px;
+
+                .whatsapp-icon-btn {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                .whatsapp-number {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+.navbar.sticky {
+    background: white;
+    color: #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    &::before {
+        background: transparent;
+    }
+}
+
+
+@media (max-width: 1150px) {
+    .navbar {
+        padding: 15px 50px;
+        min-height: 70px;
+    }
+
+    .navbar.sticky {
+        background: white;
+        color: #333;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 30px;
+        min-height: 65px;
+
+        .logo-div {
+            .logo {
+                width: 160px;
+                max-height: 80px;
+            }
+        }
+    }
+
+    .navbar.sticky {
+        background: white;
+        color: #333;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 12px 25px;
+        min-height: 60px;
+    }
+
+    .navbar.sticky {
+        background: white;
+        color: #333;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 20px;
+        min-height: 55px;
+
+        .logo-div {
+            .logo {
+                width: 150px;
+                max-height: 75px;
+            }
+        }
+
+        .call-div-right {
+            width: 160px;
+
+            .whatsapp-button {
+                .whatsapp-number {
+                    font-size: 16px;
+                }
+
+                .whatsapp-icon-btn {
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+        }
+    }
+
+    .navbar.sticky {
+        background: white;
+        color: #333;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media (max-width: 400px) {
+    .navbar {
+        padding: 10px 20px;
+        min-height: 55px;
+
+        .logo-div {
+            .logo {
+                width: 150px;
+                max-height: 75px;
+            }
+        }
+
+        .call-div-right {
+
+            .whatsapp-button {
+                .whatsapp-number {
+                    font-size: 16px;
+                }
+
+                .whatsapp-icon-btn {
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,350 @@
+@font-face {
+  font-family: 'Anek Latin';
+  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Anek Latin';
+  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Anek Latin';
+  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Anek Latin';
+  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Anek Latin';
+  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Anek Latin';
+  src: url('./assets/Fonts/Anek_Latin/AnekLatin-VariableFont_wdth,wght.ttf') format('truetype-variations');
+  font-weight: 100 800;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  font-family: 'Anek Latin', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: white;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  font-weight: 500;
+  text-decoration: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+body {
+  margin: 0;
+
+  width: 100%;
+  min-height: 100vh;
+}
+
+html {
+  /* scroll-snap-type: y mandatory; */
+  scroll-behavior: smooth;
+  scroll-snap-type: none;
+}
+
+section {
+  height: 100%;
+  scroll-snap-align: center;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button, input, textarea, select {
+  font-family: 'Anek Latin', sans-serif;
+}
+
+$white: #ffffff;
+$black: #000000;
+$primary: #50E6AF;
+$secondary: #2196F3;
+$tertiary: #006FAC;
+$text-primary: #50E6AF;
+$text-secondary: #2196F3;
+$whatsapp-color: #2ED065;
+$accent: #FFC700;
+$bg-dark: #036DAB;
+
+
+// Base button class - consistent padding like header button
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 34px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  justify-content: center;
+  text-align: center;
+
+  .btn-icon {
+    font-size: 20px;
+  }
+}
+
+// WhatsApp button - green background
+.btn-whatsapp,
+.whatsapp-btn {
+  background: #2ED065;
+  color: white;
+  border: none;
+
+  &:hover {
+    background: #25D366;
+    box-shadow: 0 4px 12px rgba(46, 208, 101, 0.3);
+  }
+}
+
+// Tertiary button - dark blue background
+.tertiary-btn {
+  background: #006FAC;
+  color: white;
+  border: none;
+
+  &:hover {
+    background: #005a8f;
+    box-shadow: 0 4px 12px rgba(0, 111, 172, 0.3);
+  }
+}
+
+// Primary button - light green background
+.primary-btn {
+  background: #50E6AF;
+  color: white;
+  border: none;
+  
+  &:hover {
+    // background: #3dd19a;
+    box-shadow: 0 4px 12px rgba(80, 230, 175, 0.3);
+  }
+}
+
+// Secondary button - blue background
+.secondary-btn {
+  background: #2196F3;
+  color: white;
+  box-shadow: 0 8px 32px rgba(3, 109, 171, 0.3);
+  
+  &:hover {
+    background: #036DAB;
+    box-shadow: 0 8px 32px rgba(3, 109, 171, 0.5);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Button with border #2196F3, white background, #2196F3 text
+.btn-outline-blue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 34px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid #2196F3;
+  background: white;
+  color: #2196F3;
+  cursor: pointer;
+  justify-content: center;
+
+  &:hover {
+    background: #2196F3;
+    color: white;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Button with background #2196F3, border #2196F3, white text
+.btn-solid-blue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 34px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid #2196F3;
+  background: #2196F3;
+  color: white;
+  cursor: pointer;
+  justify-content: center;
+
+  &:hover {
+    background: white;
+    color: #2196F3;
+    border-color: #2196F3;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.rounded-full {
+    border-radius: 50px;
+    padding: 14px 40px;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.content-wrapper {
+  background: white;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: -20px;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 10;
+  border-radius: 30px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+
+  // Curved bottom for the last section
+  > *:last-child {
+    border-radius: 0 0 30px 30px;
+  }
+
+  @media (max-width: 968px) {
+    margin-left: 30px;
+    margin-right: 30px;
+    // margin-top: -80px;
+    border-radius: 25px 25px 0 0;
+    
+    > *:last-child {
+      border-radius: 0 0 25px 25px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    
+    > *:last-child {
+      border-radius: 0;
+    }
+  }
+
+  @media (max-width: 500px) {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    
+    > *:last-child {
+      border-radius: 0;
+    }
+  }
+}
+
+.section-container {
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+  @media (max-width: 900px) {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  @media (max-width: 500px) {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+
+// reCAPTCHA v3 badge: keep on top of fixed headers, footers, modals
+.grecaptcha-badge {
+  z-index: 9999 !important;
+}
