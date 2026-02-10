@@ -165,15 +165,15 @@ $bg-dark: #036DAB;
   }
 }
 
-// Primary button - light green background
+// Primary button - WhatsApp green (used for "Book via WhatsApp" CTAs)
 .primary-btn {
-  background: #50E6AF;
+  background: #25D366;
   color: white;
   border: none;
-  
+
   &:hover {
-    // background: #3dd19a;
-    box-shadow: 0 4px 12px rgba(80, 230, 175, 0.3);
+    background: #20bd5a;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
   }
 }
 

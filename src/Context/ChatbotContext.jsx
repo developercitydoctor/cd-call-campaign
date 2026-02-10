@@ -4,6 +4,7 @@ const ChatbotContext = createContext(null);
 
 export function ChatbotProvider({ children }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [isPopupFormOpen, setIsPopupFormOpen] = useState(false);
 
     const openChatbot = useCallback(() => {
         setIsOpen(true);
@@ -13,12 +14,29 @@ export function ChatbotProvider({ children }) {
         setIsOpen(false);
     }, []);
 
+    const openPopupForm = useCallback(() => {
+        setIsPopupFormOpen(true);
+    }, []);
+
+    const closePopupForm = useCallback(() => {
+        setIsPopupFormOpen(false);
+    }, []);
+
     const toggleChatbot = useCallback(() => {
         setIsOpen((prev) => !prev);
     }, []);
 
     return (
-        <ChatbotContext.Provider value={{ isOpen, setIsOpen, openChatbot, closeChatbot, toggleChatbot }}>
+        <ChatbotContext.Provider value={{
+            isOpen,
+            setIsOpen,
+            openChatbot,
+            closeChatbot,
+            toggleChatbot,
+            isPopupFormOpen,
+            openPopupForm,
+            closePopupForm,
+        }}>
             {children}
         </ChatbotContext.Provider>
     );

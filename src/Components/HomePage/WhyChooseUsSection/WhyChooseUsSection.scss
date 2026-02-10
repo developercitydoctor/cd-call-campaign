@@ -102,12 +102,11 @@
         .btn {
           min-width: 280px;
           font-weight: 500;
-          padding: 14px 28px;
+          padding: 12px 24px;
           font-size: 20px;
 
           .btn-icon {
-            width: 35px;
-            height: 35px;
+            font-size: 22px;
             object-fit: cover;
             object-position: center;
           }
@@ -249,7 +248,7 @@
             min-width: 100%;
             width: 100%;
             padding: 12px 24px;
-            font-size: 15px;
+            font-size: 20px;
           }
         }
       }
@@ -314,10 +313,6 @@
             width: 100%;
             padding: 12px 20px;
             font-size: 22px;
-
-            .btn-icon {
-              font-size: 30px;
-            }
           }
         }
       }

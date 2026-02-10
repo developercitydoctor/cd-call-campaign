@@ -139,21 +139,14 @@
         font-weight: 500;
 
         .btn-icon {
-          font-size: 28px;
+          font-size: 22px !important;
         }
       }
 
-      .btn.primary-btn {
+      .btn.primary-btn,
+      .btn.tertiary-btn {
         font-size: 20px;
         font-weight: 500;
-
-        .btn-icon {
-          font-size: 35px;
-          width: 35px;
-          height: 35px;
-          object-fit: cover;
-          object-position: center;
-        }
       }
     }
   }
@@ -411,16 +404,13 @@
           font-size: 20px;
 
           .btn-icon {
-            font-size: 25px;
+            font-size: 22px;
           }
         }
 
-        .btn.primary-btn {
+        .btn.primary-btn,
+        .btn.tertiary-btn {
           font-size: 20px;
-
-          .btn-icon {
-            font-size: 25px;
-          }
         }
       }
     }

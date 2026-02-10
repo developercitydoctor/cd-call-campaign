@@ -123,13 +123,12 @@
 
     .btn {
       min-width: 300px;
-      padding: 8px 28px;
+      padding: 12px 24px;
       font-size: 20px;
       font-weight: 500;
 
       .btn-icon {
-        width: 35px;
-        height: 35px;
+        font-size: 22px;
         object-fit: cover;
         object-position: center;
       }
@@ -408,7 +407,7 @@
         font-size: 20px;
 
         .btn-icon {
-          font-size: 30px;
+          font-size: 22px;
         }
       }
     }
@@ -420,10 +419,10 @@
     .whatsapp-booking-wrapper {
       .btn {
         padding: 10px 18px;
-        font-size: 18px;
+        font-size: 20px;
 
         .btn-icon {
-          font-size: 25px;
+          font-size: 22px;
         }
       }
     }

@@ -1,5 +1,5 @@
 import "./WhyChooseUsSection.scss";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa";
 import { useChatbot } from "../../../Context/ChatbotContext";
 import heroImage from "../../../assets/Images/image-1.png";
 import icon1 from "../../../assets/Icons/icon-1.png";
@@ -7,8 +7,6 @@ import icon2 from "../../../assets/Icons/icon-2.png";
 import icon3 from "../../../assets/Icons/icon-3.png";
 import icon4 from "../../../assets/Icons/icon-4.png";
 import icon5 from "../../../assets/Icons/icon-5.png";
-
-import chatbotIcon from "../../../assets/Common/chatbot-icon-white.png";
 
 const features = [
   {
@@ -44,7 +42,7 @@ const features = [
 ];
 
 const WhyChooseUsSection = () => {
-  const { openChatbot } = useChatbot();
+  const { openPopupForm } = useChatbot();
   return (
     <section id="why-choose-us" className="why-choose-us-section section-container">
       <div className="why-choose-us-wrapper">
@@ -68,9 +66,9 @@ const WhyChooseUsSection = () => {
               ))}
             </div>
             <div className="whatsapp-booking-wrapper">
-              <button type="button" className="btn primary-btn" onClick={openChatbot}>
-                <img src={chatbotIcon} alt="Chat with us" className="btn-icon" />
-                Chat with us
+              <button type="button" className="btn tertiary-btn" onClick={openPopupForm}>
+                Book Instantly Via Call
+                <FaPhone className="btn-icon" />
               </button>
             </div>
           </div>

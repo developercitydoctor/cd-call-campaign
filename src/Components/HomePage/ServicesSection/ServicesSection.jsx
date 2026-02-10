@@ -1,5 +1,5 @@
 import "./ServicesSection.scss";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa";
 import { useChatbot } from "../../../Context/ChatbotContext";
 import service1 from "../../../assets/Services/image-1.webp";
 import service2 from "../../../assets/Services/image-2.webp";
@@ -11,8 +11,6 @@ import service7 from "../../../assets/Services/image-7.webp";
 import service8 from "../../../assets/Services/image-8.webp";
 import service9 from "../../../assets/Services/image-9.webp";
 import service10 from "../../../assets/Services/image-10.webp";
-
-import chatbotIcon from "../../../assets/Common/chatbot-icon-white.png";
 
 const services = [
   {
@@ -78,7 +76,7 @@ const services = [
 ];
 
 const ServicesSection = () => {
-  const { openChatbot } = useChatbot();
+  const { openPopupForm } = useChatbot();
   return (
     <section id="services" className="services-section">
       <div className="services-wrapper">
@@ -105,9 +103,9 @@ const ServicesSection = () => {
         </div>
 
         <div className="whatsapp-booking-wrapper">
-          <button type="button" className="btn primary-btn" onClick={openChatbot}>
-            <img src={chatbotIcon} alt="Chat with us" className="btn-icon" />
-            Chat with us
+          <button type="button" className="btn tertiary-btn" onClick={openPopupForm}>
+            Book Instantly Via Call
+            <FaPhone className="btn-icon" />
           </button>
         </div>
       </div>

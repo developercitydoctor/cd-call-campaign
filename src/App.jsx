@@ -5,18 +5,21 @@ import AppRouter from './Components/AppRouter/AppRouter';
 import routes from './Routes/Routes';
 import Header from './Components/Common/Header/Header';
 import Footer from './Components/Common/Footer/Footer';
-import Chatbot from './Components/Common/Chatbot/Chatbot';
+import PopupForm from './Components/Common/PopupForm/PopupForm';
 import BookingModal from './Components/Common/BookingModal/BookingModal';
 import { useBookingModal } from './Context/BookingModalContext';
+import { useChatbot } from './Context/ChatbotContext';
 import { initAttributionCapture } from './Utils/attribution';
 import { initRecaptchaOnLanding } from './Utils/recaptcha';
+import MobileFixedButtons from './Components/Common/MobileFixedButtons/MobileFixedButtons';
 
-// New Changes - Icon file name changed
+// New Changes - CallBack Request Campaign
 
 export default function App() {
   const location = useLocation();
   const [ pageLoading, setPageLoading ] = useState(true);
   const { isOpen, closeModal } = useBookingModal();
+  const { isPopupFormOpen, closePopupForm } = useChatbot();
 
   // Initialize attribution capture and reCAPTCHA v3 (once on landing)
   useEffect(() => {
@@ -34,7 +37,6 @@ export default function App() {
     return () => clearTimeout(timeout);
   }, [location.pathname]);
 
-  // Normal site - Chatbot stays mounted outside pageLoading so it doesn't reset when navigating
   return (
     <>
       <AppLoader isVisible={pageLoading} />
@@ -43,10 +45,11 @@ export default function App() {
           <Header />
           <AppRouter routes={routes} />
           <Footer />
+          <MobileFixedButtons />
           <BookingModal isOpen={isOpen} onClose={closeModal} />
+          {isPopupFormOpen && <PopupForm handleClose={closePopupForm} />}
         </Fragment>
       )}
-      {location.pathname !== '/thank-you' && <Chatbot />}
     </>
   );
 }

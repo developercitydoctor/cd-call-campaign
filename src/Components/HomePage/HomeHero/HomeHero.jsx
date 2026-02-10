@@ -2,18 +2,17 @@ import "./HomeHero.scss";
 import bannerImage from "../../../assets/Banners/Landing-Page-Banner.png";
 import mobileBannerImage from "../../../assets/Banners/mobile-banner.jpg";
 import { IoMdStar } from "react-icons/io";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa";
 import icon11 from "../../../assets/Icons/icon-11.png";
 import icon12 from "../../../assets/Icons/icon-12.png";
 import icon13 from "../../../assets/Icons/icon-13.png";
 import useIsMobile from "../../../Utils/useIsMobile";
 import { useChatbot } from "../../../Context/ChatbotContext";
-import chatbotIcon from "../../../assets/Common/chatbot-icon-white.png";
 
 
 export default function HomeHero() {
   const isMobile = useIsMobile(768);
-  const { openChatbot } = useChatbot();
+  const { openPopupForm } = useChatbot();
 
   return (
     <>
@@ -49,9 +48,9 @@ export default function HomeHero() {
           </div>
 
           <div className="hero-buttons">
-            <button type="button" className="btn primary-btn" onClick={openChatbot}>
-              <img src={chatbotIcon} alt="Chat with us" className="btn-icon" />
-              Chat with us
+            <button type="button" className="btn tertiary-btn" onClick={openPopupForm}>
+              Book Instantly Via Call
+              <FaPhone className="btn-icon" />
             </button>
           </div>
         </div>

@@ -1,0 +1,292 @@
+.popup-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1010;
+  padding: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.popup-modal-content {
+  position: relative;
+  background: transparent;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+
+  .closeButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 24px;
+  
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  .popup-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .background-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  .popup-content {
+    position: relative;
+    z-index: 2;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    overflow-y: auto;
+
+    .popup-header {
+      text-align: center;
+      color: white;
+
+      .popup-logo {
+        width: 150px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      .popup-title {
+        font-family: 'Anek Latin', sans-serif;
+        font-size: 25px;
+        font-weight: 700;
+        color: white;
+        margin: 0 0 15px 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .popup-subtitle {
+        font-family: 'Anek Latin', sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0 auto;
+        max-width: 400px;
+      }
+    }
+
+    .popup-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .form-field {
+        width: 100%;
+
+        .MuiOutlinedInput-root {
+          color: white;
+          border-radius: 20px;
+          transition: all 0.3s ease;
+          font-family: 'Anek Latin', sans-serif;
+          // background: rgba(255, 255, 255, 0.1);
+          // backdrop-filter: blur(10px);
+
+          fieldset {
+            border-color: rgba(255, 255, 255, 0.3);
+            border-width: 1px;
+          }
+
+          &:hover fieldset {
+            border-color: rgba(255, 255, 255, 0.5);
+            border-width: 2px;
+          }
+
+          &.Mui-focused fieldset {
+            border-color: white;
+            border-width: 2px;
+            // background: rgba(255, 255, 255, 0.15);
+          }
+        }
+
+        .MuiInputLabel-root {
+          color: rgba(255, 255, 255, 0.7);
+          font-family: 'Anek Latin', sans-serif;
+        }
+
+        .MuiInputLabel-root.Mui-focused {
+          color: white;
+        }
+
+        .MuiInputBase-input {
+          color: white;
+
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+          }
+        }
+      }
+
+      .btn.btn-glass {
+        width: 100%;
+        margin-top: 10px;
+        text-transform: uppercase;
+      }
+    }
+
+    .error-message {
+      color: #ffcccc;
+      font-size: 12px;
+      margin-top: -15px;
+      margin-bottom: 5px;
+      text-align: left;
+      font-family: 'Anek Latin', sans-serif;
+    }
+
+    .response-message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+      font-weight: 500;
+      font-family: 'Anek Latin', sans-serif;
+      
+      &.success {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: #4caf50;
+        border: 1px solid rgba(76, 175, 80, 0.5);
+      }
+      
+      &.error {
+        background-color: rgba(244, 67, 54, 0.2);
+        color: #f44336;
+        border: 1px solid rgba(244, 67, 54, 0.5);
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .popup-modal-content {
+    max-width: 100%;
+    max-height: 95vh;
+    border-radius: 20px;
+
+    .popup-content {
+      padding: 40px 30px;
+
+      .popup-header {
+        .popup-logo {
+          width: 120px;
+        }
+
+        .popup-title {
+          font-size: 28px;
+        }
+
+        .popup-subtitle {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .popup-modal-content {
+    .closeButton {
+      top: 15px;
+      right: 15px;
+      width: 35px;
+      height: 35px;
+      font-size: 20px;
+    }
+
+    .popup-content {
+      padding: 35px 25px;
+      gap: 25px;
+
+      .popup-header {
+        .popup-logo {
+          width: 150px;
+          margin-bottom: 15px;
+        }
+
+        .popup-title {
+          font-size: 24px;
+        }
+
+        .popup-subtitle {
+          font-size: 13px;
+        }
+      }
+
+      .popup-form {
+        gap: 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .popup-modal-content {
+    .popup-content {
+      padding: 30px 20px;
+
+      .popup-header {
+        .popup-title {
+          font-size: 22px;
+        }
+      }
+
+      .popup-form {
+        .form-field {
+          .MuiOutlinedInput-root {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}

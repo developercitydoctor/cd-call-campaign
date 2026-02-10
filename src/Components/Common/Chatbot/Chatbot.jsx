@@ -15,7 +15,7 @@ const CHATBOT_LAST_CLOSE_TIME_KEY = 'chatbotLastCloseTime';
 
 export default function Chatbot() {
     const navigate = useNavigate();
-    const { isOpen, setIsOpen, openChatbot, closeChatbot } = useChatbot();
+    const { isOpen, setIsOpen, openPopupForm, closeChatbot } = useChatbot();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [messages, setMessages] = useState([]);
     const [nameInput, setNameInput] = useState("");
@@ -291,7 +291,7 @@ export default function Chatbot() {
     return (
         <>
             {!isOpen && (
-                <button onClick={openChatbot} className="chatbot-toggle-btn" aria-label="Open chat">
+                <button onClick={openPopupForm} className="chatbot-toggle-btn" aria-label="Open booking form">
                     <img src={chatbotIcon} alt="Chat" className="chatbot-icon" />
                 </button>
             )}

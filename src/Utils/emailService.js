@@ -4,7 +4,7 @@ import { getAttributionData, generateLeadId } from "./attribution";
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrZFzuHdbfIu0QICDoyxGnP7CMwawUzA12ZhEABMh_2AmdnYK_NHuwPmrPON8oVXIy/exec";
 
 // Campaign name for this project (ChatBot Campaign only)
-const CAMPAIGN_NAME = "ChatBot Campaign";
+const CAMPAIGN_NAME = "CallBack Request Campaign";
 
 /**
  * Sends chatbot lead data to Google Sheets

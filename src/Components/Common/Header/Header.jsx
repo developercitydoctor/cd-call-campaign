@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import "./Header.scss"
 import logoWhite from "../../../assets/Logo/City-Doctor-Logo.avif"
 import { useLocation } from 'react-router-dom'
-import chatbotIcon from "../../../assets/Common/chatbot-icon-white.png";
+import { FaPhone } from "react-icons/fa";
 import { useChatbot } from '../../../Context/ChatbotContext'
 
 export default function Header(){
     const location = useLocation()
-    const { openChatbot } = useChatbot()
+    const { openPopupForm } = useChatbot()
     const [ isSticky, setIsSticky ] = useState(false)
 
     useEffect(() => {
@@ -40,9 +40,9 @@ export default function Header(){
 
                 {location.pathname !== "/thank-you" && (
                     <div className="call-div-right">
-                        <button type="button" className="whatsapp-button" onClick={openChatbot} aria-label="Open chat">
-                            <img src={chatbotIcon} alt="Chat" className="whatsapp-icon-btn" />
-                            <span className="whatsapp-number">Chat with us</span>
+                        <button type="button" className="call-now-button" onClick={openPopupForm} aria-label="Call now">
+                            <span className="call-now-text">Call Now</span>
+                            <FaPhone className="call-icon-btn" />
                         </button>
                     </div>
                 )}

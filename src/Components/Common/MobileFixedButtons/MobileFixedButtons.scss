@@ -1,199 +1,43 @@
 @import '../../../index.scss';
 
 .mobile-fixed-buttons {
-  // Desktop styles - bottom right corner, circular icons only
-  @media (min-width: 769px) {
+  position: fixed;
+  right: 10px;
+  bottom: 90px;
+  z-index: 1000;
+
+  .fixed-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 34px;
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    position: fixed;
-    bottom: 180px;
-    right: 50px;
-    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    text-decoration: none;
 
-    .fixed-btn {
-      width: 55px;
-      height: 55px;
-      border-radius: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-
-      .btn-icon {
-        font-size: 30px;
-      }
-
-      .btn-text {
-        display: none;
-      }
-
-      &.whatsapp-btn {
-        background: #25D366;
-        color: white;
-
-        &:hover {
-          background: #20BA5A;
-          box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
-          transform: translateY(-2px) scale(1.05);
-        }
-
-        &:active {
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      &.book-online-btn {
-        background: $secondary;
-        color: white;
-
-        // &:hover {
-        //   background: #036DAB;
-        //   box-shadow: 0 6px 20px rgba(32, 150, 243, 0.4);
-        //   transform: translateY(-2px) scale(1.05);
-        // }
-
-        &:active {
-          transform: translateY(0) scale(1);
-        }
-      }
+    .btn-icon {
+      width: 26px;
+      height: 26px;
     }
 
-    .fixed-btn.book-online-btn {
-      .btn-icon {
-        width: 25px;
-        height: 25px;
-        object-fit: cover;
-        object-position: center;
-        rotate: -15deg;
-      }
-    }
+    &.call-btn {
+      background: $tertiary;
+      color: white;
 
-    .fixed-btn.whatsapp-btn {
-      .btn-icon {
-        font-size: 30px;
-      }
-    }
-  }
-
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    padding: 15px;
-    background: white;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-
-    .fixed-btn {
-      width: 100%;
-      padding: 14px 20px;
-      border-radius: 34px;
-      font-size: 16px;
-      font-weight: 600;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-
-      .btn-icon {
-        font-size: 20px;
+      &:hover {
+        background: #005a8f;
+        box-shadow: 0 6px 20px rgba(0, 111, 172, 0.4);
+        transform: translateY(-2px) scale(1.05);
       }
 
-      .btn-text {
-        display: inline;
-        font-size: 22px;
-      }
-
-      &.whatsapp-btn {
-        background: #25D366;
-        color: white;
-        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
-
-        &:hover {
-          background: #20BA5A;
-          box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
-          transform: translateY(-2px);
-        }
-
-        &:active {
-          transform: translateY(0);
-        }
-      }
-
-      &.book-online-btn {
-        background: $tertiary;
-        color: white;
-        box-shadow: 0 4px 16px rgba(32, 150, 243, 0.3);
-
-        // &:hover {
-        //   background: #036DAB;
-        //   box-shadow: 0 6px 20px rgba(32, 150, 243, 0.4);
-        //   transform: translateY(-2px);
-        // }
-
-        &:active {
-          transform: translateY(0);
-        }
-      }
-    }
-
-    .fixed-btn.book-online-btn {
-      .btn-icon {
-        width: 25px;
-        height: 25px;
-        object-fit: cover;
-        object-position: center;
-        rotate: -15deg;
-      }
-    }
-
-    .fixed-btn.whatsapp-btn {
-      .btn-icon {
-        font-size: 30px;
-      }
-    }
-  }
-
-  @media (max-width: 480px) {
-    padding: 12px;
-
-    .fixed-btn {
-      padding: 12px 18px;
-      font-size: 16px;
-
-      .btn-icon {
-        font-size: 18px;
-      }
-    }
-  }
-
-  @media (max-width: 420px) {
-    padding: 12px;
-
-    .fixed-btn {
-      padding: 12px 18px;
-      font-size: 14px;
-
-      .btn-text {
-        display: inline;
-        font-size: 18px;
+      &:active {
+        transform: translateY(0) scale(1);
       }
     }
   }
 }
-
