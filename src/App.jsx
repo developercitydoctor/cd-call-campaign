@@ -32,7 +32,7 @@ export default function App() {
 
     const timeout = setTimeout(() => {
       setPageLoading(false);
-    }, 1500); // Adjust loader duration
+    }, 600); // Adjust loader duration
 
     return () => clearTimeout(timeout);
   }, [location.pathname]);
@@ -45,8 +45,8 @@ export default function App() {
           <Header />
           <AppRouter routes={routes} />
           <Footer />
-          <MobileFixedButtons />
-          <BookingModal isOpen={isOpen} onClose={closeModal} />
+          {location.pathname !== "/thank-you" && <MobileFixedButtons />}
+          {/* <BookingModal isOpen={isOpen} onClose={closeModal} /> */}
           {isPopupFormOpen && <PopupForm handleClose={closePopupForm} />}
         </Fragment>
       )}

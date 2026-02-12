@@ -1,3 +1,5 @@
+@import '../../../index.scss';
+
 .popup-modal-overlay {
   position: fixed;
   top: 0;
@@ -121,9 +123,9 @@
       align-items: center;
       gap: 12px;
       padding: 12px 20px;
-      background: rgba(224, 255, 224, 0.95);
+      background: rgba(255, 255, 255, 0.95);
       border-radius: 999px;
-      border: 1px solid rgba(76, 175, 80, 0.4);
+      border: 1px solid rgba(0, 111, 172, 0.5);
       width: 100%;
       box-sizing: border-box;
 
@@ -146,13 +148,13 @@
           font-family: 'Anek Latin', sans-serif;
           font-size: 15px;
           font-weight: 700;
-          color: #166534;
+          color: $tertiary;
         }
 
         .live-subtitle {
           font-family: 'Anek Latin', sans-serif;
           font-size: 12px;
-          color: #15803d;
+          color: $tertiary;
           font-weight: 500;
         }
       }
@@ -185,14 +187,13 @@
           }
 
           &:hover fieldset {
-            border-color: rgba(255, 255, 255, 0.5);
+            border-color: rgba(0, 111, 172, 0.6);
             border-width: 2px;
           }
 
           &.Mui-focused fieldset {
-            border-color: white;
+            border-color: $tertiary;
             border-width: 2px;
-            // background: rgba(255, 255, 255, 0.15);
           }
         }
 
@@ -202,7 +203,7 @@
         }
 
         .MuiInputLabel-root.Mui-focused {
-          color: white;
+          color: $tertiary;
         }
 
         .MuiInputBase-input {
@@ -214,10 +215,19 @@
         }
       }
 
-      .btn.btn-glass {
+      .btn.btn-glass,
+      .btn.primary-btn {
         width: 100%;
         margin-top: 10px;
         text-transform: uppercase;
+        background: $tertiary;
+        color: white;
+        border: none;
+
+        &:hover:not(:disabled) {
+          background: #005a8f;
+          box-shadow: 0 4px 12px rgba(0, 111, 172, 0.3);
+        }
       }
     }
 
@@ -240,9 +250,9 @@
       font-family: 'Anek Latin', sans-serif;
       
       &.success {
-        background-color: rgba(76, 175, 80, 0.2);
-        color: #4caf50;
-        border: 1px solid rgba(76, 175, 80, 0.5);
+        background-color: rgba(0, 111, 172, 0.2);
+        color: $tertiary;
+        border: 1px solid rgba(0, 111, 172, 0.5);
       }
       
       &.error {

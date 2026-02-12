@@ -93,12 +93,21 @@ function PopupForm({ handleClose }) {
       });
 
       if (result.success) {
+        if (typeof window !== "undefined") {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "chatbot_form_conversion",
+            eventCategory: "Chatbot",
+            eventAction: "form_submitted",
+            eventLabel: "Thank you page redirect",
+          });
+        }
         setResponse(`Your form has been submitted successfully. Our team will get back to you shortly. Est. response time: ${ESTIMATED_RESPONSE_TIME_SEC} seconds.`);
         toast.success("Your form has been submitted successfully.");
         setFormData({ name: '', phone: '', emirates: '', symptoms: [], symptomsOther: '' });
         setFormErrors({});
         setTimeout(() => {
-          navigate("/thank-you");
+          navigate("/thank-you", { state: { fromSubmit: true, symptoms: symptomsParts } });
           handleClose();
         }, 3000);
       } else {
@@ -153,8 +162,8 @@ function PopupForm({ handleClose }) {
             <div className="popup-live-banner">
               <span className="live-dot" aria-hidden />
               <div className="live-banner-text">
-                <span className="live-title">Our Medical Consultants are Online…</span>
-                <span className="live-subtitle">Est. WhatsApp Chat Response Time: {ESTIMATED_RESPONSE_TIME_SEC} seconds</span>
+                <span className="live-title">Our medical team is online</span>
+                <span className="live-subtitle">We will call back you in {ESTIMATED_RESPONSE_TIME_SEC} seconds</span>
               </div>
             </div>
 
@@ -337,7 +346,7 @@ function PopupForm({ handleClose }) {
               )}
 
               <button type="submit" className="btn primary-btn" disabled={isLoading}>
-                {isLoading ? "Sending..." : "Submit & Get a WhatsApp Chat Back"}
+                {isLoading ? "Sending..." : "Submit & Get a Call Back"}
               </button>
               {response && (
                 <div className={`response-message ${response.includes("submitted successfully") ? "success" : "error"}`}>
