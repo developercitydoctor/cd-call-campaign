@@ -126,7 +126,7 @@ function PopupForm({ handleClose }) {
               {/* <img src={logo} alt="City Doctor" className="popup-logo" /> */}
               <h1 className="popup-title">Book a Doctor at Your Doorstep</h1>
               <p className="popup-subtitle">
-                Fill in your details and our medical team is available 24/7.
+                Fill in your details and our medical consultants will reach out to you shortly.
               </p>
             </div>
 
@@ -134,7 +134,7 @@ function PopupForm({ handleClose }) {
               <span className="live-dot" aria-hidden />
               <div className="live-banner-text">
                 <span className="live-title">Our Medical Consultants are Online…</span>
-                <span className="live-subtitle">Est. Response Time: {ESTIMATED_RESPONSE_LABEL}</span>
+                <span className="live-subtitle">Est. Call Back Time {ESTIMATED_RESPONSE_LABEL}</span>
               </div>
             </div>
 
