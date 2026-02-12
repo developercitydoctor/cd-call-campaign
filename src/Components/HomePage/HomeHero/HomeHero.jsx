@@ -2,7 +2,7 @@ import "./HomeHero.scss";
 import bannerImage from "../../../assets/Banners/Landing-Page-Banner.png";
 import mobileBannerImage from "../../../assets/Banners/mobile-banner.jpg";
 import { IoMdStar } from "react-icons/io";
-import { FaPhone } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import icon11 from "../../../assets/Icons/icon-11.png";
 import icon12 from "../../../assets/Icons/icon-12.png";
 import icon13 from "../../../assets/Icons/icon-13.png";
@@ -49,8 +49,8 @@ export default function HomeHero() {
 
           <div className="hero-buttons">
             <button type="button" className="btn tertiary-btn" onClick={openPopupForm}>
+            <FaPhoneAlt className="btn-icon" />
               Book Instantly Via Call
-              <FaPhone className="btn-icon" />
             </button>
           </div>
         </div>

@@ -6,17 +6,22 @@ import logo from "../../../assets/Logo/City-Doctor-Logo-White.svg";
 import bannerImage from "../../../assets/Banners/mobile-banner.jpg";
 import { useNavigate } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
-import { TextField } from '@mui/material';
+import { TextField, MenuItem, Checkbox, ListItemText } from '@mui/material';
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { toast } from 'react-toastify';
+import { services } from "../../../Constants/services";
+import { ESTIMATED_RESPONSE_MINS, ESTIMATED_RESPONSE_LABEL } from "../../../Constants/estimatedResponse";
+
+const EMIRATES_OPTIONS = ["Dubai", "Abu Dhabi", "Sharjah"];
 
 function PopupForm({ handleClose }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    symptoms: '',
+    emirates: '',
+    symptoms: [],
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -27,13 +32,22 @@ function PopupForm({ handleClose }) {
     const errors = {};
     if (formData?.name?.trim()?.length === 0) errors.name = "Name is required";
     if (formData?.phone?.trim()?.length === 0) errors.phone = "Phone number is required";
-    if (formData?.symptoms?.trim()?.length === 0) errors.symptoms = "Please describe your symptoms or health concern";
+    if (!formData?.emirates?.trim()) errors.emirates = "Please select your Emirates";
+    if (!formData?.symptoms?.length) errors.symptoms = "Please select at least one symptom";
     return errors;
   };
 
   const handleUpdate = (field) => (event) => {
     const inputValue = event.target.value;
     setFormData((prev) => ({ ...prev, [field]: inputValue }));
+  };
+
+  const handleSymptomsChange = (event) => {
+    const value = event.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      symptoms: typeof value === "string" ? value.split(",") : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -48,19 +62,21 @@ function PopupForm({ handleClose }) {
       setIsLoading(true);
       setResponse("");
 
+      const symptomsString = Array.isArray(formData.symptoms) ? formData.symptoms.join("\n") : "";
+
       const result = await sendChatbotToGoogleSheets({
         name: formData.name.trim(),
         phone: formData.phone,
-        symptoms: formData.symptoms.trim(),
+        emirates: formData.emirates.trim(),
+        symptoms: symptomsString,
         pageUrl: typeof window !== "undefined" ? window.location.href : "",
       });
 
       if (result.success) {
-        setResponse("Your form has been submitted successfully. Our team will get back to you shortly.");
+        setResponse(`Your form has been submitted successfully. Our team will get back to you within ${ESTIMATED_RESPONSE_MINS} minutes.`);
         toast.success("Your form has been submitted successfully.");
-        setFormData({ name: '', phone: '', symptoms: '' });
+        setFormData({ name: '', phone: '', emirates: '', symptoms: [] });
         setFormErrors({});
-        // Keep popup open, show success message; after 3s navigate and close popup during navigation
         setTimeout(() => {
           navigate("/thank-you");
           handleClose();
@@ -107,11 +123,19 @@ function PopupForm({ handleClose }) {
 
           <div className="popup-content">
             <div className="popup-header">
-              <img src={logo} alt="City Doctor" className="popup-logo" />
+              {/* <img src={logo} alt="City Doctor" className="popup-logo" /> */}
               <h1 className="popup-title">Book a Doctor at Your Doorstep</h1>
               <p className="popup-subtitle">
-                Fill in your details and our medical team will contact you within 30–45 minutes. Available 24/7.
+                Fill in your details and our medical team is available 24/7.
               </p>
+            </div>
+
+            <div className="popup-live-banner">
+              <span className="live-dot" aria-hidden />
+              <div className="live-banner-text">
+                <span className="live-title">Our Medical Consultants are Online…</span>
+                <span className="live-subtitle">Est. Response Time: {ESTIMATED_RESPONSE_LABEL}</span>
+              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="popup-form">
@@ -170,20 +194,54 @@ function PopupForm({ handleClose }) {
               {formErrors.phone && <div className="error-message">{formErrors.phone}</div>}
 
               <TextField
-                label="Symptoms or health concern"
+                select
+                label="Emirates"
                 variant="outlined"
-                multiline
-                rows={4}
-                value={formData.symptoms}
-                onChange={handleUpdate('symptoms')}
+                value={formData.emirates}
+                onChange={handleUpdate("emirates")}
                 fullWidth
                 className="form-field"
                 required
-                placeholder="Describe your symptoms or what you need help with..."
-              />
+                SelectProps={{
+                  displayEmpty: true,
+                  renderValue: (v) => (v ? v : ""),
+                  MenuProps: { sx: { zIndex: 9999 } },
+                }}
+              >
+                {EMIRATES_OPTIONS.map((em) => (
+                  <MenuItem key={em} value={em}>{em}</MenuItem>
+                ))}
+              </TextField>
+              {formErrors.emirates && <div className="error-message">{formErrors.emirates}</div>}
+
+              <TextField
+                select
+                label="Symptoms (select multiple)"
+                variant="outlined"
+                value={formData.symptoms || []}
+                onChange={handleSymptomsChange}
+                fullWidth
+                className="form-field"
+                required
+                SelectProps={{
+                  multiple: true,
+                  renderValue: (selected) => (selected && selected.length ? selected.join(", ") : ""),
+                  MenuProps: {
+                    sx: { zIndex: 9999 },
+                    PaperProps: { sx: { maxHeight: 220 } },
+                  },
+                }}
+              >
+                {services.map((service) => (
+                  <MenuItem key={service.id} value={service.title}>
+                    <Checkbox checked={(formData.symptoms || []).indexOf(service.title) > -1} size="small" sx={{ color: "rgba(255,255,255,0.7)", "&.Mui-checked": { color: "#25D366" } }} />
+                    <ListItemText primary={service.title} primaryTypographyProps={{ fontSize: "14px" }} />
+                  </MenuItem>
+                ))}
+              </TextField>
               {formErrors.symptoms && <div className="error-message">{formErrors.symptoms}</div>}
 
-              <button type="submit" className="btn primary-btn" disabled={isLoading}>
+              <button type="submit" className="btn secondary-btn" disabled={isLoading}>
                 {isLoading ? "Sending..." : "Submit & Get a Call Back"}
               </button>
               {response && (

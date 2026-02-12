@@ -1,5 +1,5 @@
 import "./ServicesSection.scss";
-import { FaPhone } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import { useChatbot } from "../../../Context/ChatbotContext";
 import service1 from "../../../assets/Services/image-1.webp";
 import service2 from "../../../assets/Services/image-2.webp";
@@ -104,8 +104,8 @@ const ServicesSection = () => {
 
         <div className="whatsapp-booking-wrapper">
           <button type="button" className="btn tertiary-btn" onClick={openPopupForm}>
+            <FaPhoneAlt className="btn-icon" />
             Book Instantly Via Call
-            <FaPhone className="btn-icon" />
           </button>
         </div>
       </div>

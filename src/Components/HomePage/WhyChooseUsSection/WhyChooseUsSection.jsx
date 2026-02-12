@@ -1,5 +1,5 @@
 import "./WhyChooseUsSection.scss";
-import { FaPhone } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import { useChatbot } from "../../../Context/ChatbotContext";
 import heroImage from "../../../assets/Images/image-1.png";
 import icon1 from "../../../assets/Icons/icon-1.png";
@@ -67,8 +67,8 @@ const WhyChooseUsSection = () => {
             </div>
             <div className="whatsapp-booking-wrapper">
               <button type="button" className="btn tertiary-btn" onClick={openPopupForm}>
+                <FaPhoneAlt className="btn-icon" />
                 Book Instantly Via Call
-                <FaPhone className="btn-icon" />
               </button>
             </div>
           </div>

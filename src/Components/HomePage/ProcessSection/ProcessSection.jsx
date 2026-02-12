@@ -1,5 +1,5 @@
 import "./ProcessSection.scss";
-import { FaPhone } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import { useChatbot } from "../../../Context/ChatbotContext";
 import step1Image from "../../../assets/Icons/icon-6.png";
 import step2Image from "../../../assets/Icons/icon-7.png";
@@ -58,8 +58,8 @@ const ProcessSection = () => {
 
         <div className="whatsapp-booking-wrapper">
           <button type="button" className="btn primary-btn" onClick={openPopupForm}>
+            <FaPhoneAlt className="btn-icon" />
             Book Instantly Via Call
-            <FaPhone className="btn-icon" />
           </button>
         </div>
       </div>

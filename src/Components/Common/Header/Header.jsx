@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./Header.scss"
 import logoWhite from "../../../assets/Logo/City-Doctor-Logo.avif"
 import { useLocation } from 'react-router-dom'
-import { FaPhone } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import { useChatbot } from '../../../Context/ChatbotContext'
 
 export default function Header(){
@@ -41,8 +41,8 @@ export default function Header(){
                 {location.pathname !== "/thank-you" && (
                     <div className="call-div-right">
                         <button type="button" className="call-now-button" onClick={openPopupForm} aria-label="Call now">
+                            <FaPhoneAlt className="call-icon-btn" />
                             <span className="call-now-text">Call Now</span>
-                            <FaPhone className="call-icon-btn" />
                         </button>
                     </div>
                 )}
