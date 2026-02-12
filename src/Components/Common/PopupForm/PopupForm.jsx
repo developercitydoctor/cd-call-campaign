@@ -11,7 +11,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { toast } from 'react-toastify';
 import { services } from "../../../Constants/services";
-import { ESTIMATED_RESPONSE_MINS, ESTIMATED_RESPONSE_LABEL } from "../../../Constants/estimatedResponse";
+import { ESTIMATED_RESPONSE_SECS, ESTIMATED_RESPONSE_LABEL } from "../../../Constants/estimatedResponse";
 
 const EMIRATES_OPTIONS = ["Dubai", "Abu Dhabi", "Sharjah"];
 
@@ -73,7 +73,7 @@ function PopupForm({ handleClose }) {
       });
 
       if (result.success) {
-        setResponse(`Your form has been submitted successfully. Our team will get back to you within ${ESTIMATED_RESPONSE_MINS} minutes.`);
+        setResponse(`Your form has been submitted successfully. Our team will get back to you within ${ESTIMATED_RESPONSE_SECS} seconds.`);
         toast.success("Your form has been submitted successfully.");
         setFormData({ name: '', phone: '', emirates: '', symptoms: [] });
         setFormErrors({});
@@ -124,17 +124,17 @@ function PopupForm({ handleClose }) {
           <div className="popup-content">
             <div className="popup-header">
               {/* <img src={logo} alt="City Doctor" className="popup-logo" /> */}
-              <h1 className="popup-title">Book a Doctor at Your Doorstep</h1>
-              <p className="popup-subtitle">
+              <h1 className="popup-title">Book a Doctor<br/> at Your Doorstep</h1>
+              {/* <p className="popup-subtitle">
                 Fill in your details and our medical consultants will reach out to you shortly.
-              </p>
+              </p> */}
             </div>
 
             <div className="popup-live-banner">
               <span className="live-dot" aria-hidden />
               <div className="live-banner-text">
                 <span className="live-title">Our Medical Consultants are Online…</span>
-                <span className="live-subtitle">Est. Call Back Time {ESTIMATED_RESPONSE_LABEL}</span>
+                <span className="live-subtitle">Est. Call Back Time: {ESTIMATED_RESPONSE_LABEL}</span>
               </div>
             </div>
 
