@@ -11,9 +11,11 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { toast } from 'react-toastify';
 import { services } from "../../../Constants/services";
-import { ESTIMATED_RESPONSE_SECS, ESTIMATED_RESPONSE_LABEL } from "../../../Constants/estimatedResponse";
+import { ESTIMATED_RESPONSE_TIME_SEC, ESTIMATED_RESPONSE_LABEL } from "../../../Constants/estimatedResponse";
 
 const EMIRATES_OPTIONS = ["Dubai", "Abu Dhabi", "Sharjah"];
+const SYMPTOM_OTHER = "Other";
+const SYMPTOM_DONE = "__done__"; // sentinel to close menu, not stored in form
 
 function PopupForm({ handleClose }) {
   const navigate = useNavigate();
@@ -22,11 +24,13 @@ function PopupForm({ handleClose }) {
     phone: '',
     emirates: '',
     symptoms: [],
+    symptomsOther: '',
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [symptomsMenuOpen, setSymptomsMenuOpen] = useState(false);
 
   const validateErrors = () => {
     const errors = {};
@@ -34,6 +38,8 @@ function PopupForm({ handleClose }) {
     if (formData?.phone?.trim()?.length === 0) errors.phone = "Phone number is required";
     if (!formData?.emirates?.trim()) errors.emirates = "Please select your Emirates";
     if (!formData?.symptoms?.length) errors.symptoms = "Please select at least one symptom";
+    const hasOther = (formData?.symptoms || []).includes(SYMPTOM_OTHER);
+    if (hasOther && !formData?.symptomsOther?.trim()) errors.symptomsOther = "Please specify your other symptoms";
     return errors;
   };
 
@@ -44,10 +50,19 @@ function PopupForm({ handleClose }) {
 
   const handleSymptomsChange = (event) => {
     const value = event.target.value;
-    setFormData((prev) => ({
-      ...prev,
-      symptoms: typeof value === "string" ? value.split(",") : value,
-    }));
+    const list = typeof value === "string" ? value.split(",") : value;
+    if (list.includes(SYMPTOM_DONE)) {
+      setFormData((prev) => ({
+        ...prev,
+        symptoms: list.filter((s) => s !== SYMPTOM_DONE),
+      }));
+      setTimeout(() => setSymptomsMenuOpen(false), 0);
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        symptoms: list,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -62,7 +77,12 @@ function PopupForm({ handleClose }) {
       setIsLoading(true);
       setResponse("");
 
-      const symptomsString = Array.isArray(formData.symptoms) ? formData.symptoms.join("\n") : "";
+      const symptomsList = Array.isArray(formData.symptoms) ? formData.symptoms.filter((s) => s !== SYMPTOM_OTHER) : [];
+      const hasOther = (formData.symptoms || []).includes(SYMPTOM_OTHER);
+      const otherText = hasOther && formData.symptomsOther?.trim() ? formData.symptomsOther.trim() : "";
+      const symptomsParts = [...symptomsList];
+      if (otherText) symptomsParts.push(`${SYMPTOM_OTHER}: ${otherText}`);
+      const symptomsString = symptomsParts.join("\n");
 
       const result = await sendChatbotToGoogleSheets({
         name: formData.name.trim(),
@@ -73,9 +93,9 @@ function PopupForm({ handleClose }) {
       });
 
       if (result.success) {
-        setResponse(`Your form has been submitted successfully. Our team will get back to you within ${ESTIMATED_RESPONSE_SECS} seconds.`);
+        setResponse(`Your form has been submitted successfully. Our team will get back to you shortly. Est. response time: ${ESTIMATED_RESPONSE_TIME_SEC} seconds.`);
         toast.success("Your form has been submitted successfully.");
-        setFormData({ name: '', phone: '', emirates: '', symptoms: [] });
+        setFormData({ name: '', phone: '', emirates: '', symptoms: [], symptomsOther: '' });
         setFormErrors({});
         setTimeout(() => {
           navigate("/thank-you");
@@ -134,7 +154,7 @@ function PopupForm({ handleClose }) {
               <span className="live-dot" aria-hidden />
               <div className="live-banner-text">
                 <span className="live-title">Our Medical Consultants are Online…</span>
-                <span className="live-subtitle">Est. Call Back Time: {ESTIMATED_RESPONSE_LABEL}</span>
+                <span className="live-subtitle">Est. WhatsApp Chat Response Time: {ESTIMATED_RESPONSE_TIME_SEC} seconds</span>
               </div>
             </div>
 
@@ -225,24 +245,99 @@ function PopupForm({ handleClose }) {
                 required
                 SelectProps={{
                   multiple: true,
-                  renderValue: (selected) => (selected && selected.length ? selected.join(", ") : ""),
+                  open: symptomsMenuOpen,
+                  onOpen: () => setSymptomsMenuOpen(true),
+                  onClose: () => setSymptomsMenuOpen(false),
+                  renderValue: (selected) => {
+                    const list = (selected || []).filter((s) => s !== SYMPTOM_DONE);
+                    return list.length ? list.join(", ") : "";
+                  },
                   MenuProps: {
                     sx: { zIndex: 9999 },
-                    PaperProps: { sx: { maxHeight: 220 } },
+                    PaperProps: {
+                      sx: {
+                        maxHeight: 320,
+                        display: "flex",
+                        flexDirection: "column",
+                        backgroundColor: "#fff",
+                        "& .MuiMenuItem-root": { color: "#333" },
+                        "& .MuiListItemText-primary": { color: "#333" },
+                      },
+                    },
+                    ListProps: {
+                      sx: {
+                        maxHeight: 240,
+                        overflowY: "auto",
+                        paddingBottom: 0,
+                      },
+                    },
+                    autoFocus: false,
                   },
                 }}
               >
                 {services.map((service) => (
                   <MenuItem key={service.id} value={service.title}>
-                    <Checkbox checked={(formData.symptoms || []).indexOf(service.title) > -1} size="small" sx={{ color: "rgba(255,255,255,0.7)", "&.Mui-checked": { color: "#25D366" } }} />
+                    <Checkbox
+                      checked={(formData.symptoms || []).indexOf(service.title) > -1}
+                      size="small"
+                      sx={{
+                        color: "rgba(0,0,0,0.75)",
+                        "&.Mui-checked": { color: "#25D366" },
+                      }}
+                    />
                     <ListItemText primary={service.title} primaryTypographyProps={{ fontSize: "14px" }} />
                   </MenuItem>
                 ))}
+                <MenuItem value={SYMPTOM_OTHER}>
+                  <Checkbox
+                    checked={(formData.symptoms || []).indexOf(SYMPTOM_OTHER) > -1}
+                    size="small"
+                    sx={{
+                      color: "rgba(0,0,0,0.75)",
+                      "&.Mui-checked": { color: "#25D366" },
+                    }}
+                  />
+                  <ListItemText primary={SYMPTOM_OTHER} primaryTypographyProps={{ fontSize: "14px" }} />
+                </MenuItem>
+                <MenuItem
+                  value={SYMPTOM_DONE}
+                  className="symptoms-done-item"
+                  sx={{
+                    justifyContent: "center",
+                    fontWeight: 600,
+                    position: "sticky",
+                    bottom: 0,
+                    backgroundColor: "#e8e8e8",
+                    borderTop: "1px solid #ccc",
+                    pt: 1.5,
+                    mt: 0.5,
+                    flexShrink: 0,
+                    zIndex: 1,
+                    "&:hover": { backgroundColor: "#d8d8d8" },
+                  }}
+                >
+                  Done
+                </MenuItem>
               </TextField>
               {formErrors.symptoms && <div className="error-message">{formErrors.symptoms}</div>}
 
-              <button type="submit" className="btn secondary-btn" disabled={isLoading}>
-                {isLoading ? "Sending..." : "Submit & Get a Call Back"}
+              {(formData.symptoms || []).includes(SYMPTOM_OTHER) && (
+                <>
+                  <TextField
+                    label="Please specify (other symptoms)"
+                    variant="outlined"
+                    value={formData.symptomsOther}
+                    onChange={handleUpdate("symptomsOther")}
+                    fullWidth
+                    className="form-field"
+                    placeholder="Describe your symptoms..."
+                  />
+                  {formErrors.symptomsOther && <div className="error-message">{formErrors.symptomsOther}</div>}
+                </>
+              )}
+
+              <button type="submit" className="btn primary-btn" disabled={isLoading}>
+                {isLoading ? "Sending..." : "Submit & Get a WhatsApp Chat Back"}
               </button>
               {response && (
                 <div className={`response-message ${response.includes("submitted successfully") ? "success" : "error"}`}>
