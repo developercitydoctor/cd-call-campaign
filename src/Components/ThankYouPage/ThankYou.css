@@ -74,15 +74,12 @@
   text-align: left;
 }
 
-.thankyou-hero .thankyou-content-button {
-  margin-top: 10px;
-}
 
 .thankyou-hero .thankyou-hero-content a {
   text-decoration: none;
 }
 
-/* Glass-style container for redirect + countdown (only after form submit) */
+/* Glass-style container for redirect + countdown (only after successful submit) */
 .thankyou-hero .thankyou-redirect-glass {
   margin-top: 16px;
   padding: 16px 20px;
@@ -145,6 +142,10 @@
   color: white;
 }
 
+.thankyou-hero .thankyou-content-button {
+  margin-top: 16px;
+}
+
 /* Tablet - same as desktop, slightly less padding */
 @media (max-width: 1200px) {
   .thankyou-hero .thankyou-banner-background::after {
@@ -162,12 +163,6 @@
 
   .thankyou-hero .thankyou-content-title,
   .thankyou-hero .thankyou-content-description {
-    color: white;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  }
-
-  .thankyou-hero .thankyou-redirect-text,
-  .thankyou-hero .thankyou-countdown {
     color: white;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   }
@@ -212,7 +207,11 @@
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   }
 
-  /* Mobile: redirect glass text in white */
+  .thankyou-hero .thankyou-hero-content a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .thankyou-hero .thankyou-redirect-text,
   .thankyou-hero .thankyou-countdown {
     color: white;
@@ -221,11 +220,6 @@
 
   .thankyou-hero .thankyou-countdown-number {
     color: #25D366;
-  }
-
-  .thankyou-hero .thankyou-hero-content a {
-    margin-left: auto;
-    margin-right: auto;
   }
 }
 
