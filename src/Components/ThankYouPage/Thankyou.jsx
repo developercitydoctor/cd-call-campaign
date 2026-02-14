@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import "./ThankYou.css";
 import useIsMobile from "../../Utils/useIsMobile";
@@ -24,6 +24,7 @@ export default function Thankyou() {
   const symptoms = location.state?.symptoms ?? [];
   const whatsappLink = buildWhatsAppLink(symptoms);
   const [countdown, setCountdown] = useState(fromSubmit ? 1 : 0);
+  const hasAutoRedirected = useRef(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,6 +35,16 @@ export default function Thankyou() {
     const timer = setInterval(() => setCountdown((c) => c - 1), 1000);
     return () => clearInterval(timer);
   }, [fromSubmit, countdown]);
+
+  // Auto-redirect to WhatsApp 1 sec after countdown reaches 0
+  useEffect(() => {
+    if (!fromSubmit || countdown > 0 || hasAutoRedirected.current) return;
+    hasAutoRedirected.current = true;
+    const redirectTimer = setTimeout(() => {
+      window.open(whatsappLink, "_blank", "noopener,noreferrer");
+    }, 1000);
+    return () => clearTimeout(redirectTimer);
+  }, [fromSubmit, countdown, whatsappLink]);
 
   return (
     <>
