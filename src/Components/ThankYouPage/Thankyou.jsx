@@ -23,7 +23,7 @@ export default function Thankyou() {
   const fromSubmit = location.state?.fromSubmit === true;
   const symptoms = location.state?.symptoms ?? [];
   const whatsappLink = buildWhatsAppLink(symptoms);
-  const [countdown, setCountdown] = useState(fromSubmit ? 5 : 0);
+  const [countdown, setCountdown] = useState(fromSubmit ? 1 : 0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
