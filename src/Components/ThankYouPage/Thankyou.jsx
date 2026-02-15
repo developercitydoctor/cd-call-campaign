@@ -7,6 +7,9 @@ import bannerImage from "../../assets/Banners/Landing-Page-Banner.png";
 import mobileBannerImage from "../../assets/Banners/mobile-banner.jpg";
 
 const WHATSAPP_URL = "https://wa.me/971551548684";
+const THANKYOU_FROM_SUBMIT_KEY = "thankyou_from_submit";
+const THANKYOU_SYMPTOMS_KEY = "thankyou_symptoms";
+const COUNTDOWN_SEC = 1;
 
 function buildWhatsAppLink(symptoms) {
     const symptomsText = Array.isArray(symptoms) && symptoms.length > 0
@@ -19,41 +22,57 @@ function buildWhatsAppLink(symptoms) {
 export default function Thankyou() {
     const isMobile = useIsMobile(768);
     const location = useLocation();
-    const state = location.state || {};
-    const fromSubmit = !!state && Array.isArray(state.symptoms);
+    // Support both PopupForm (fromSubmit) and Chatbot (fromChatbot) flows
+    const fromSubmitState = location.state?.fromSubmit === true || location.state?.fromChatbot === true;
+    const stateSymptoms = location.state?.symptoms ?? [];
 
-    const [countdown, setCountdown] = useState(fromSubmit ? 1 : 0);
+    const [refreshedSymptoms, setRefreshedSymptoms] = useState(() => {
+        if (fromSubmitState) return null;
+        try {
+            if (typeof window !== "undefined" && sessionStorage.getItem(THANKYOU_FROM_SUBMIT_KEY) === "1") {
+                const s = sessionStorage.getItem(THANKYOU_SYMPTOMS_KEY);
+                return s ? JSON.parse(s) : [];
+            }
+        } catch { /* ignore */ }
+        return null;
+    });
 
-    const symptomsForMessage = (() => {
-        if (!fromSubmit || !state.symptoms) return [];
-        const list = [...state.symptoms];
-        const hasOther = list.includes("Other");
-        const otherText = state.symptomsOther?.trim();
-        const parts = list.filter((s) => s !== "Other");
-        if (hasOther && otherText) parts.push(`Other: ${otherText}`);
-        else if (hasOther) parts.push("Other");
-        return parts;
-    })();
-
-    const whatsappLink = fromSubmit ? buildWhatsAppLink(symptomsForMessage) : null;
+    const symptoms = fromSubmitState ? stateSymptoms : (refreshedSymptoms || []);
+    const whatsappLink = buildWhatsAppLink(symptoms);
+    const [countdown, setCountdown] = useState(fromSubmitState ? COUNTDOWN_SEC : 0);
+    const showRedirectCountdown = fromSubmitState;
+    const showOnlyWhatsAppButton = !fromSubmitState && refreshedSymptoms !== null;
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     useEffect(() => {
-        if (!fromSubmit || countdown <= 0) return;
-        const timer = setInterval(() => setCountdown((c) => c - 1), 1000);
-        return () => clearInterval(timer);
-    }, [fromSubmit, countdown]);
+        if (fromSubmitState && stateSymptoms) {
+            sessionStorage.setItem(THANKYOU_FROM_SUBMIT_KEY, "1");
+            sessionStorage.setItem(THANKYOU_SYMPTOMS_KEY, JSON.stringify(stateSymptoms));
+        }
+    }, [fromSubmitState, stateSymptoms]);
 
     useEffect(() => {
-        if (!fromSubmit || !whatsappLink || countdown > 0) return;
-        const redirectTimer = setTimeout(() => {
-            window.location.href = whatsappLink;
-        }, 1000);
-        return () => clearTimeout(redirectTimer);
-    }, [fromSubmit, whatsappLink, countdown]);
+        if (refreshedSymptoms !== null) {
+            sessionStorage.removeItem(THANKYOU_FROM_SUBMIT_KEY);
+            sessionStorage.removeItem(THANKYOU_SYMPTOMS_KEY);
+        }
+    }, [refreshedSymptoms]);
+
+    // Countdown then same-tab redirect to WhatsApp (no new tab)
+    useEffect(() => {
+        if (!showRedirectCountdown) return;
+        if (countdown <= 0) {
+            if (typeof window !== "undefined" && whatsappLink) {
+                window.location.href = whatsappLink;
+            }
+            return;
+        }
+        const timer = setInterval(() => setCountdown((c) => c - 1), 1000);
+        return () => clearInterval(timer);
+    }, [showRedirectCountdown, countdown, whatsappLink]);
 
     return (
         <>
@@ -69,15 +88,28 @@ export default function Thankyou() {
                 <div className="thankyou-hero-content">
                     <h1 className="thankyou-content-title">Thank You</h1>
                     <p className="thankyou-content-description">We'll get back to you soon.</p>
-                    {fromSubmit && (
+                    {showRedirectCountdown && (
                         <div className="thankyou-redirect-glass">
-                            <p className="thankyou-redirect-text">You are being redirected to City Doctor WhatsApp...</p>
-                            <p className="thankyou-countdown">Redirecting in <span className="thankyou-countdown-number">{countdown}</span> sec</p>
-                            {countdown <= 0 && (
-                                <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="thankyou-whatsapp-link">
-                                    Open WhatsApp
-                                </a>
+                            {countdown > 0 ? (
+                                <>
+                                    <p className="thankyou-redirect-text">You are being redirected to City Doctor WhatsApp...</p>
+                                    <p className="thankyou-countdown">Redirecting in <span className="thankyou-countdown-number">{countdown}</span> sec</p>
+                                </>
+                            ) : (
+                                <>
+                                    <p className="thankyou-redirect-text">Redirecting to WhatsApp...</p>
+                                    <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="thankyou-whatsapp-link">
+                                        Open WhatsApp
+                                    </a>
+                                </>
                             )}
+                        </div>
+                    )}
+                    {showOnlyWhatsAppButton && (
+                        <div className="thankyou-redirect-glass">
+                            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="thankyou-whatsapp-link">
+                                Open WhatsApp
+                            </a>
                         </div>
                     )}
                     <a href="/">
@@ -89,4 +121,4 @@ export default function Thankyou() {
             </div>
         </>
     );
-} 
+}
