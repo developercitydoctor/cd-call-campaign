@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { sendChatbotToGoogleSheets } from "../../../Utils/emailService";
+import { sanitizeAndLimitPhone, validatePhoneForCountry, formatPhoneForCountry } from "../../../Utils/phoneValidation";
 import './PopupForm.scss';
 import logo from "../../../assets/Logo/City-Doctor-Logo-White.svg";
 import bannerImage from "../../../assets/Banners/mobile-banner.jpg";
@@ -22,6 +23,7 @@ function PopupForm({ handleClose }) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
+    phoneTruncateKey: 0,
     emirates: '',
     symptoms: [],
     symptomsOther: '',
@@ -31,11 +33,20 @@ function PopupForm({ handleClose }) {
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [symptomsMenuOpen, setSymptomsMenuOpen] = useState(false);
+  const phoneCountryRef = useRef(null);
 
   const validateErrors = () => {
     const errors = {};
     if (formData?.name?.trim()?.length === 0) errors.name = "Name is required";
-    if (formData?.phone?.trim()?.length === 0) errors.phone = "Phone number is required";
+    const digitsOnly = String(formData?.phone ?? "").replace(/\D/g, "");
+    if (!digitsOnly || digitsOnly.length < 10) {
+      errors.phone = "Phone number is required";
+    } else {
+      const country = phoneCountryRef.current || { dialCode: "971", countryCode: "ae" };
+      if (!validatePhoneForCountry(digitsOnly, country)) {
+        errors.phone = "Please enter a valid phone number for the selected country.";
+      }
+    }
     if (!formData?.emirates?.trim()) errors.emirates = "Please select your Emirates";
     if (!formData?.symptoms?.length) errors.symptoms = "Please select at least one symptom";
     const hasOther = (formData?.symptoms || []).includes(SYMPTOM_OTHER);
@@ -47,6 +58,18 @@ function PopupForm({ handleClose }) {
     const inputValue = event.target.value;
     setFormData((prev) => ({ ...prev, [field]: inputValue }));
   };
+
+  const handlePhoneChange = useCallback((phone, country) => {
+    phoneCountryRef.current = country;
+    const sanitized = sanitizeAndLimitPhone(phone, country);
+    const inputDigits = String(phone ?? "").replace(/\D/g, "");
+    const didTruncate = inputDigits.length > sanitized.length;
+    setFormData((prev) => ({
+      ...prev,
+      phone: sanitized,
+      phoneTruncateKey: (prev.phoneTruncateKey ?? 0) + (didTruncate ? 1 : 0),
+    }));
+  }, []);
 
   const handleSymptomsChange = (event) => {
     const value = event.target.value;
@@ -84,9 +107,13 @@ function PopupForm({ handleClose }) {
       if (otherText) symptomsParts.push(`${SYMPTOM_OTHER}: ${otherText}`);
       const symptomsString = symptomsParts.join("\n");
 
+      const digitsOnly = String(formData.phone ?? "").replace(/\D/g, "");
+      const country = phoneCountryRef.current || { dialCode: "971", countryCode: "ae" };
+      const phoneFormatted = formatPhoneForCountry(digitsOnly, country);
+
       const result = await sendChatbotToGoogleSheets({
         name: formData.name.trim(),
-        phone: formData.phone,
+        phone: phoneFormatted,
         emirates: formData.emirates.trim(),
         symptoms: symptomsString,
         pageUrl: typeof window !== "undefined" ? window.location.href : "",
@@ -104,7 +131,7 @@ function PopupForm({ handleClose }) {
         }
         setResponse(`Your form has been submitted successfully. Our team will get back to you shortly. Est. response time: ${ESTIMATED_RESPONSE_TIME_SEC} seconds.`);
         toast.success("Your form has been submitted successfully.");
-        setFormData({ name: '', phone: '', emirates: '', symptoms: [], symptomsOther: '' });
+        setFormData({ name: '', phone: '', phoneTruncateKey: 0, emirates: '', symptoms: [], symptomsOther: '' });
         setFormErrors({});
         setTimeout(() => {
           navigate("/thank-you", { state: { fromSubmit: true, symptoms: symptomsParts } });
@@ -180,9 +207,11 @@ function PopupForm({ handleClose }) {
               {formErrors.name && <div className="error-message">{formErrors.name}</div>}
 
               <PhoneInput
+                key={`phone-${formData.phoneTruncateKey ?? 0}`}
                 country={"ae"}
                 value={formData.phone}
-                onChange={(phone) => setFormData(prev => ({ ...prev, phone }))}
+                onChange={handlePhoneChange}
+                enableLongNumbers={20}
                 inputProps={{
                   name: "phone",
                   required: true,
